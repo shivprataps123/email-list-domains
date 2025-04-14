@@ -1,35 +1,57 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from "react";
+import { Row, Col, Card } from "antd";
+import { useRecipients } from "./hooks/useRecipients";
+import AutocompleteInput from "./components/AutocompleteInput";
+import AvailableRecipients from "./components/AvailableRecipients";
+import SelectedRecipients from "./components/SelectedRecipients";
+import "./styles/main.css";
+import "./App.css";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const {
+    recipients,
+    availableDomains,
+    toggleRecipientSelection,
+    toggleDomainSelection,
+    addNewRecipient,
+    removeRecipient,
+    removeDomain,
+    groupedRecipients,
+  } = useRecipients();
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div className="email-manager">
+      <Row gutter={16}>
+        <Col span={24}>
+          <Card title="Email Recipient Manager">
+            <AutocompleteInput
+              domains={availableDomains}
+              recipients={recipients}
+              onAddRecipient={addNewRecipient}
+              onSelectDomain={toggleDomainSelection}
+            />
 
-export default App
+            <Row gutter={16} style={{ marginTop: 24 }}>
+              <Col span={12}>
+                <AvailableRecipients
+                  recipients={recipients}
+                  onToggleRecipient={toggleRecipientSelection}
+                />
+              </Col>
+              <Col span={12}>
+                <SelectedRecipients
+                  groupedRecipients={groupedRecipients}
+                  onToggleRecipient={toggleRecipientSelection}
+                  onRemoveRecipient={removeRecipient}
+                  onRemoveDomain={removeDomain}
+                />
+              </Col>
+            </Row>
+          </Card>
+        </Col>
+      </Row>
+    </div>
+  );
+};
+
+export default App;
