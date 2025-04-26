@@ -5,7 +5,7 @@ A React application built with Ant Design for managing email recipients with dom
 ## Start
 
 
-- git clone https://github.com/shivprataps123/MotadataAssignment.git
+- git clone https://github.com/shivprataps123/email-list-domains.git
 - cd assignment
 - npm install
 - npm run dev
